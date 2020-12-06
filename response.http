@@ -1,0 +1,12 @@
+POST http://127.0.0.1:8000/api/libros HTTP/1.1
+Accept:application/json
+Content-Type: application/json
+
+{
+    "titulo": "Titulo Prueba",
+    "autor": "Jan Limpens",
+    "editorial": "Editorial Fulir",
+    "edicion":"2da edicion",
+    "condicion": "Mala",
+    "precio_original": "130"
+}
