@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    background: '#DBDABA'
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    background: '#DBDABA',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    background: '#DBDABA',
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -60,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
     },
+    background: '#DBDABA',
   },
   toolbar: {
     display: 'flex',
@@ -68,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+    
   },
   title: {
       flexGrow: 1,

@@ -3,6 +3,7 @@ import LibrosService from '../../Services/LibrosService';
 import SearchIcon from '@material-ui/icons/Search';
 import { FormControl, InputAdornment, TextField } from '@material-ui/core';
 import LibrosTabla from './LibrosTabla'
+import axios from 'axios'
 
 
 export default class LibrosBuscar extends Component {
@@ -30,9 +31,10 @@ export default class LibrosBuscar extends Component {
     }
 
     retrieveLibros() {
-        LibrosService.getAll()
+        axios.get('http://localhost:8000/api/libros')
             .then(libros => {
-                this.setState({libros: libros.data.data});
+                console.log(libros)
+                this.setState({libros: libros.data});
                 this.setState({retrieve: 0});
             })
             .catch((e) => {
@@ -76,10 +78,10 @@ export default class LibrosBuscar extends Component {
             <div>
                 <div style={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "right",
                     margin: " 40px 40px 20px 40px",
                 }}>
-                    <FormControl style={{width: "50%"}}>
+                    <FormControl style={{width: "80%"}}>
                         <TextField 
                             label="Titulo"
                             value={this.state.filtrarPorTitulo}
@@ -96,10 +98,10 @@ export default class LibrosBuscar extends Component {
                 </div>
                 <div style={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "right",
                     margin: " 40px 40px 20px 40px",
                 }}>
-                     <FormControl style={{width: "50%"}}>
+                     <FormControl style={{width: "80%"}}>
                         <TextField 
                             label="Autor"
                             value={this.state.filtrarPorAutor}
@@ -115,7 +117,16 @@ export default class LibrosBuscar extends Component {
                     </FormControl>
                 </div>
                 <div >
-                    <LibrosTabla /> 
+                    <LibrosTabla 
+                        titulo = {filtrarPorTitulo}
+                        autor = {filtrarPorAutor} 
+                        data={libros}
+                        setPage={this.setPage}
+                        page={page}
+                        url={history}
+                        sinFiltro={this.sinFiltro}
+                        retrieve={this.state.retrieve}                   
+                    /> 
                 </div>
                 
             </div>
