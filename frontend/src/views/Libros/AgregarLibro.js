@@ -1,8 +1,7 @@
 import React from "react";
 import { Paper, makeStyles, Container } from '@material-ui/core';
-import LibroDetalle from './LibroDetalle';
+import AgregarLibroForm from './AgregarLibroForm';
 import Sidenav from "../../Nav/Sidenav";
-import Mensaje from '../../Components/Mensaje';
 
 
 const width_proportion = '100%';
@@ -23,30 +22,20 @@ const useStyle = makeStyles(theme => ({
 }))
 
 
-const Libros = (props) => {
+const AgregarLibro = (props) => {
   const classes = useStyle();
 
-  const args = props.location.search;
+
 console.log(props)
     return (
       <div className={classes.container}>
-        <Sidenav titulo="Detalle"/>   
+        <Sidenav titulo="Editar Libro"/>   
           <div className={classes.pageContent}>            
-            <LibroDetalle history={props.history} idLibro={props.match.params.idLibro}/>
+            <AgregarLibroForm history={props.history} idLibro={props.match.params.idLibro}/>
           </div>
-
-
-          <Mensaje 
-        success={args.includes("editarLibro") ? args.slice(-1) : -1} 
-        mensajeExito={"Se edito correctamente el libro."}
-        mensajeError={"Hubo un error al editar el libro."}
-        />
-
       </div>
-
-       
     );
 
 }
 
-export default Libros;
+export default AgregarLibro;

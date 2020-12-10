@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import LibrosService from '../../Services/LibrosService';
 import SearchIcon from '@material-ui/icons/Search';
-import { FormControl, InputAdornment, TextField } from '@material-ui/core';
+import { FormControl, Grid, IconButton, InputAdornment, TextField } from '@material-ui/core';
 import LibrosTabla from './LibrosTabla'
 import axios from 'axios'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+
 
 
 export default class LibrosBuscar extends Component {
@@ -116,6 +120,12 @@ export default class LibrosBuscar extends Component {
                         />
                     </FormControl>
                 </div>
+                <Grid container justify='flex-end' spacing={12}>
+                <Fab color="primary" aria-label="add" onClick={ () => history.push('/libro/agregar')}>
+                    <AddIcon />
+                </Fab>
+                </Grid>
+                
                 <div >
                     <LibrosTabla 
                         titulo = {filtrarPorTitulo}

@@ -2,6 +2,7 @@ import React from "react";
 import { Paper, makeStyles, Container } from '@material-ui/core';
 import LibrosBuscar from './LibrosBuscar';
 import Sidenav from "../../Nav/Sidenav";
+import Mensaje from '../../Components/Mensaje';
 
 
 const width_proportion = '100%';
@@ -23,7 +24,7 @@ const useStyle = makeStyles(theme => ({
 const Libros = (props) => {
   const classes = useStyle();
 
-
+  const args = props.location.search;
 
     return (
       <div className={classes.container}>
@@ -31,6 +32,13 @@ const Libros = (props) => {
           <div className={classes.pageContent}>            
             <LibrosBuscar history={props.history}/>
           </div>
+
+          <Mensaje 
+        success={args.includes("agregarLibro") ? args.slice(-1) : -1} 
+        mensajeExito={"Se agregó correctamente el libro."}
+        mensajeError={"Hubo un error al agregar el libro."}
+        />
+
       </div>
     );
 
