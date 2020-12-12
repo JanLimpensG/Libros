@@ -1,18 +1,19 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles'
-import { IconButton, Paper, TableHead, Toolbar, Tooltip, Typography } from '@material-ui/core'
-import FilterListIcon from '@material-ui/icons/FilterList'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, TableHead, Toolbar, Tooltip, Typography } from '@material-ui/core';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { Alert } from "@material-ui/lab";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -157,6 +158,19 @@ export default function LibrosTabla(props) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('');
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [libroEliminar, setLibroEliminar] = React.useState("");
+    const [open, setOpen] = React.useState(false);
+
+
+
+    const handleClickOpen = (libro) => {
+        setLibroEliminar(libro);
+        setOpen(true);
+      };
+      const handleClose = () => {
+        setOpen(false);
+      };
+
 
     const sinFiltro = (event) => {
         props.sinFiltro();
@@ -183,6 +197,16 @@ export default function LibrosTabla(props) {
         setRowsPerPage(parseInt(event.target.value, 10));
         props.setPage(0);
     };
+
+    const EliminarLibro = (id) => {
+        axios.delete('http://localhost:8000/api/libros/' + id)
+            .then(res => {
+                window.location.reload();
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
 
     return (
         <div className={classes.root}>
@@ -239,7 +263,7 @@ export default function LibrosTabla(props) {
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Eliminar libro" arrow>
-                                    <IconButton>
+                                    <IconButton color="secondary" onClick={() => handleClickOpen(libro)}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </Tooltip>
@@ -263,6 +287,37 @@ export default function LibrosTabla(props) {
             onChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </Paper>
+        <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          ¿Seguro que desea eliminar este libro?
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>Titulo: {libroEliminar.titulo}</Typography>
+          <Typography gutterBottom>Autor: {libroEliminar.autor}</Typography>
+          <Typography gutterBottom>
+            Editorial: {libroEliminar.editorial}
+          </Typography>
+          <Typography gutterBottom>
+            Condicion: {libroEliminar.condicion}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            autoFocus
+            onClick={() => EliminarLibro(libroEliminar.idLibro)}
+            color="primary"
+          >
+            Eliminar
+          </Button>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
         </div>
     )
 }
